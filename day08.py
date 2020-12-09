@@ -45,7 +45,7 @@ def get_answer_pt2(instr_list):
 
 
 def get_solution():
-    with open('day08_input.txt') as f:
+    with open('input/day08_input.txt') as f:
         instr_list = instruction.many().parse(''.join(f.readlines()))
         _, acc_val = get_terminates_n_acc_value(instr_list)
         print(acc_val)

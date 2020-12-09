@@ -28,7 +28,7 @@ def get_answer_pt2(numbers):
 
 
 def get_solution():
-    with open('day09_input.txt') as f:
+    with open('input/day09_input.txt') as f:
         numbers = [int(line.rstrip()) for line in f.readlines()]
         print(get_invalid_numbers(numbers, 25))
         print(get_answer_pt2(numbers))

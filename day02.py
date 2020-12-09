@@ -25,7 +25,7 @@ line_parser_part2 = line_parser.combine_dict(is_valid_part2)
 
 
 def get_solution():
-    with open('day02_input.txt') as f:
+    with open('input/day02_input.txt') as f:
         lines = [line.rstrip() for line in f.readlines()]
         result1 = sum([1 for line in lines if line_parser_part1.parse(line)])
         print(result1)

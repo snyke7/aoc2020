@@ -43,7 +43,7 @@ def count_child_bags(bag, par_child_dict):
 
 
 def get_solution():
-    with open('day07_input.txt') as f:
+    with open('input/day07_input.txt') as f:
         text = ''.join(f.readlines())
         result = bag_rules.parse(text)
         my_bag = 'shiny gold'

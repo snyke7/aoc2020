@@ -59,7 +59,7 @@ def valid_passport_pt2(passport_dict):
 
 
 def get_solution():
-    with open('day04_input.txt') as f:
+    with open('input/day04_input.txt') as f:
         file_lines = ''.join(f.readlines())
         passports = passport_data.parse(file_lines)
         passports_present = list(filter(valid_passport_pt1, passports))

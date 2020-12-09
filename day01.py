@@ -16,7 +16,7 @@ def find_3prod(numbers, total):
 
 
 def get_solution():
-    with open('day01_input.txt') as f:
+    with open('input/day01_input.txt') as f:
         numbers = [int(line.rstrip()) for line in f.readlines()]
         print(numbers)
         print(find_2prod(numbers, 2020))
