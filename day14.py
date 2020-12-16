@@ -23,7 +23,7 @@ OR_MASK = 'OR'
 AND_MASK = 'AND'
 
 
-def execute(code, memory):
+def execute_pt1(code, memory):
     if not code:
         return memory
     else:
@@ -34,7 +34,43 @@ def execute(code, memory):
         elif cmd == MEM_CMD:
             val = (memory[OR_MASK] | y) & memory[AND_MASK]
             memory[x] = val
-        return execute(code[1:], memory)
+        else:
+            raise ValueError(cmd, x, y)
+        return execute_pt1(code[1:], memory)
+
+
+def get_floating_values(float_mask):
+    if not float_mask:
+        yield 0
+    else:
+        head = float_mask[-1]
+        for val in get_floating_values(float_mask[:-1]):
+            if head == 0:
+                yield 2 * val
+            elif head == 1:
+                yield 2 * val
+                yield 2 * val + 1
+
+
+def execute_pt2(code, memory):
+    if not code:
+        return memory
+    else:
+        cmd, x, y = code[0]
+        if cmd == MASK_CMD:
+            memory[OR_MASK] = x
+            memory[AND_MASK] = y
+        elif cmd == MEM_CMD:
+            # AND_MASK is all 1s except for places where mask was exactly 0 (not 1 or X)
+            # OR_MASK is all 0s except for places where mask was exactly 1 (not 0 or X)
+            # AND_MASK & ~OR_MASK is 1 if AND_MASK is 1 and OR_MASK is 0 -> (0 or X) AND (1 or X)
+            float_mask_num = memory[AND_MASK] & ~memory[OR_MASK]
+            float_mask = list(map(int, '{:b}'.format(float_mask_num)))
+            # set base val to have zeroes where float mask is 1
+            base_loc = (x | memory[OR_MASK]) & ~float_mask_num
+            for val in get_floating_values(float_mask):
+                memory[base_loc | val] = y
+        return execute_pt2(code[1:], memory)
 
 
 def val_sum(memory):
@@ -47,5 +83,7 @@ def val_sum(memory):
 def get_solution():
     with open('input/day14_input.txt') as f:
         code = code_lines.parse(''.join(f.readlines()))
-        memory = execute(code, dict())
+        memory = execute_pt1(code, dict())
         print(val_sum(memory))
+        memory2 = execute_pt2(code, dict())
+        print(val_sum(memory2))
