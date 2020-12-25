@@ -62,6 +62,7 @@ def get_nth_state(tile_set, n):
 
 def get_solution():
     with open('input/day24_input.txt') as f:
+
         input_str = ''.join(f.readlines())  # input_str_test
         directions_list = directions_list_parse.parse(input_str)
         flipped_tiles = get_flipped_tiles(directions_list)
